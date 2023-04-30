@@ -16,6 +16,23 @@ Shortcomings
 
 Please raise issues for any enhancements or bugs. 
 
+# Index
+1. [Workflow in a nutshell](#Workflow-in-a-nutshell)
+2. [Installing](#Installing)
+3. [Create and run a new project](#Create-and-run-a-new-project)
+4. [Build the aws lambda zip](#Build-the-aws-lambda-zip)
+5. [Install the zip as a lambda](#Install-the-zip-as-a-lambda)
+6. [Configure the api gateway](#Configure-the-api-gateway)
+7. [Developer section](#Developer-section)
+
+# Workflow in a nutshell
+1. Install
+2. Create project
+3. Develop and test locally
+4. Build zip file for aws lambda
+5. Upload to aws
+6. If not done goto 3
+
 # Installing
 
 Install the package using pip: 
@@ -111,7 +128,7 @@ This will create a zip file in the ```dist``` directory called ```package.zip```
 
 Upload this package to aws lambda either in the lambda console or via s3.
 
-# Install the package
+# Install the zip as a lambda
 Once the package has been uploaded change the ```handler``` setting under runtime settings to ```app.lambda_handler```
 
 Now test the package with some of these json test cases:
@@ -176,7 +193,7 @@ Returns
 ```
 This json gets converted to a proper http response by the proxy.
 
-## Configure the api gateway
+# Configure the api gateway
 The API gateway you attach to the lambda needs to look like this
 ![API Gateway](/media/aws_api_gateway.png)
 and the methods needs to be defined to look like this:
