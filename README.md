@@ -1,4 +1,20 @@
+# Overview
 
+This is an extremely simple framework to facilitate developing rest services running as lambda services in aws. 
+
+Features
+* VERY simple
+* One lambda function required to host a whole rest service
+* Allows for local development
+
+Shortcomings
+* Only supports Python
+* Does not support non json responses
+* Query variables not supported yet
+* Headers not exposed in route handlers
+* Many others
+
+Please raise issues for any enhancements or bugs. 
 
 # Installing
 
@@ -160,15 +176,17 @@ Returns
 ```
 This json gets converted to a proper http response by the proxy.
 
+## Configure the api gateway
+The API gateway you attach to the lambda needs to look like this
+![API Gateway](/media/aws_api_gateway.png)
+and the methods needs to be defined to look like this:
+![Methods](/media/aws_api_gateway_integration_request.png)
 
-
-
-
-
-
-
-
-----------------
+# Developer section
+Run tests
+```json
+???
+```
 Build aws_lambda_mess
 ```shell
 hatch build
