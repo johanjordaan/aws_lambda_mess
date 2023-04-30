@@ -16,6 +16,8 @@ Shortcomings
 
 Please raise issues for any enhancements or bugs. 
 
+The [FAQ](FAQ.md), always the [FAQ](FAQ.md).
+
 # Index
 1. [Workflow in a nutshell](#Workflow-in-a-nutshell)
 2. [Installing](#Installing)
