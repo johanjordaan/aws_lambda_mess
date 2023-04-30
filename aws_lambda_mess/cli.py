@@ -1,6 +1,5 @@
 import os
 import shutil
-from zipfile import ZipFile
 from configparser import ConfigParser
 
 CONFIG_FILE = ".aws_lambda_mess"
@@ -38,41 +37,25 @@ def new(dirname):
     #    print(f"{os.path.join(framework_dir,file)}")
 
 def build():
+    print('Running build', __file__ )
     if not os.path.isfile(CONFIG_FILE):
         print("Project not initialised. Please run init")
         exit(1)
 
-    def get_all_file_paths(directory, exclusion_patterns):
-        file_paths = []
-        for root, directories, files in os.walk(directory):
-            for filename in files:
-                filepath = os.path.join(root, filename)
-                include = True
-                for exclusion_pattern in exclusion_patterns:
-                    if exclusion_pattern in filepath:
-                        include = False
-                if include:
-                    file_paths.append(filepath)
-        return file_paths
-
-    cfg = ConfigParser()
-    cfg.read(CONFIG_FILE)
-    print(cfg.get('main','source'))
-
-    exclusion_patterns = ["__pycache__"]
-    file_paths = get_all_file_paths("./package", exclusion_patterns) + get_all_file_paths("./aws_lambda_mess", exclusion_patterns)
-
-    print('Running build', __file__ )
     if not os.path.isdir("./build"):
         os.mkdir("./build")
     if not os.path.isdir("./build/aws_lambda_mess"):
         os.mkdir("./build/aws_lambda_mess")
 
-    with ZipFile('dist/package.zip', 'w') as zip:
-        for file in file_paths:
-            print(file)
-            zip.write(file)
+    cfg = ConfigParser()
+    cfg.read(CONFIG_FILE)
+    cfg_source = cfg.get('main', 'source')
+    cfg_package = cfg.get('main', 'package')
 
+    shutil.copytree(cfg_source, "./build/aws_lambda_mess", dirs_exist_ok=True)
+    shutil.copytree(cfg_package, "./build/aws_lambda_mess/package", dirs_exist_ok=True)
+
+    shutil.make_archive("./dist/package", "zip", "./build/aws_lambda_mess")
 
 
 def run():
@@ -87,6 +70,7 @@ def run():
 
     kwargs = vars(parser.parse_args())
     globals()[kwargs.pop('subparser')](**kwargs)
+
 
 if __name__ == "__main__":
     run()
