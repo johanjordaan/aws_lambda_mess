@@ -23,19 +23,12 @@ def new(dirname):
         shutil.copyfile(os.path.join(os.path.dirname(__file__), 'init_files', GITIGNORE_FILE), GITIGNORE_FILE)
         os.mkdir("src")
         shutil.copyfile(os.path.join(os.path.dirname(__file__), 'init_files', APP_FILE), os.path.join("src", APP_FILE))
-        os.mkdir("package")
         os.mkdir("dist")
         os.mkdir("tests")
     except Exception as e:
         print(e)
         os.chdir("..")
         exit(1)
-
-
-    #framework_dir = os.path.join(os.path.dirname(__file__), "framework")
-    #files = [file_name for file_name in os.listdir(framework_dir) if file_name not in ["__pycache__"]]
-    #for file in files:
-    #    print(f"{os.path.join(framework_dir,file)}")
 
 def build():
     print('Running build', __file__ )

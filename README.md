@@ -22,3 +22,18 @@ alm build
 
 
 
+
+
+----------------
+Build aws_lambda_mess
+```shell
+hatch build
+```
+Upload to pip
+```shell
+py -m twine upload dist/* --user johanjordaan
+```
+
+
+
+
