@@ -2,12 +2,15 @@ from aws_lambda_mess.framework.Route import Route
 from aws_lambda_mess.framework.success import success
 from aws_lambda_mess.framework.failures import bad_request
 from aws_lambda_mess.framework.server import run
+
+
 def index(params, body):
     return success({"Hallo": "Index"})
 
 
-def xxx(params, body):
-    return success({"Hallo": params})
+def greet(params, body):
+    return success({"Hallo": params["name"]})
+
 
 def default(params, body):
     return bad_request()
@@ -15,7 +18,7 @@ def default(params, body):
 
 routes = [
     Route(method_pattern="GET", path_pattern="/", handler=index),
-    Route(method_pattern="GET", path_pattern="/xxx/<name>/<surname>", handler=xxx),
+    Route(method_pattern="GET", path_pattern="/greet/<name>", handler=greet),
     Route(method_pattern=".*", path_pattern=".*", handler=default)
 ]
 
