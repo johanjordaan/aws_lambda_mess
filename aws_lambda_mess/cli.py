@@ -1,9 +1,9 @@
 import os
 import shutil
-from configparser import ConfigParser
+import json
 from pip._internal.cli.main import main as pipmain
 
-CONFIG_FILE = ".aws_lambda_mess"
+CONFIG_FILE = ".aws_lambda_mess.json"
 REQUIREMENTS_FILE = "requirements.txt"
 GITIGNORE_FILE = ".gitignore"
 APP_FILE = "app.py"
@@ -48,15 +48,15 @@ def build():
     if not os.path.isdir("./build/aws_lambda_mess"):
         os.mkdir("./build/aws_lambda_mess")
 
-    cfg = ConfigParser()
-    cfg.read(CONFIG_FILE)
-    cfg_source = cfg.get('main', 'source')
-    cfg_package = cfg.get('main', 'package')
+    with open(CONFIG_FILE,"r") as file:
+        cfg = json.load(file)
+    cfg_packages = cfg.get('main', 'packages')
 
-    shutil.copytree(cfg_source, "./build/aws_lambda_mess", dirs_exist_ok=True)
-
+    shutil.copytree(cfg["source"], "./build/aws_lambda_mess", dirs_exist_ok=True)
     shutil.make_archive("./dist/package", "zip", "./build/aws_lambda_mess")
-    pipmain(['install',"--upgrade","--target=./build/aws_lambda_mess/package","pymysql"])
+
+    for package in cfg["packages"]:
+        pipmain(['install', "--upgrade", "--target=./build/aws_lambda_mess/package", package])
 
 
 def run():

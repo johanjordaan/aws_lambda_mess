@@ -1,5 +1,0 @@
-
-# aws_lambda_mess config file"
-[main]
-source = src
-package = package 
