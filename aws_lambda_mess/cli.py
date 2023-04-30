@@ -1,6 +1,7 @@
 import os
 import shutil
 from configparser import ConfigParser
+from pip._internal.cli.main import main as pipmain
 
 CONFIG_FILE = ".aws_lambda_mess"
 REQUIREMENTS_FILE = "requirements.txt"
@@ -53,9 +54,9 @@ def build():
     cfg_package = cfg.get('main', 'package')
 
     shutil.copytree(cfg_source, "./build/aws_lambda_mess", dirs_exist_ok=True)
-    shutil.copytree(cfg_package, "./build/aws_lambda_mess/package", dirs_exist_ok=True)
 
     shutil.make_archive("./dist/package", "zip", "./build/aws_lambda_mess")
+    pipmain(['install',"--upgrade","--target=./build/aws_lambda_mess/package","pymysql"])
 
 
 def run():

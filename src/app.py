@@ -19,5 +19,8 @@ routes = [
     Route(method_pattern=".*", path_pattern=".*", handler=default)
 ]
 
+from aws_lambda_mess.framework.lambda_dispatcher import get_handler
+lambda_handler = get_handler(routes)
+
 if __name__ == "__main__":
     run(9000, routes)
