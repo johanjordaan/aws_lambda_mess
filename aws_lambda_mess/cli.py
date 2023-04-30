@@ -46,11 +46,11 @@ def build():
     cfg_packages = cfg.get('main', 'packages')
 
     shutil.copytree(cfg["source"], "./build/aws_lambda_mess", dirs_exist_ok=True)
-    shutil.make_archive("./dist/package", "zip", "./build/aws_lambda_mess")
 
     for package in cfg["packages"]:
         pipmain(['install', "--upgrade", "--target=./build/aws_lambda_mess/package", package])
 
+    shutil.make_archive("./dist/package", "zip", "./build/aws_lambda_mess")
 
 def run():
     import argparse
