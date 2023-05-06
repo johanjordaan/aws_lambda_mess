@@ -77,9 +77,9 @@ def default(params, body):
 
 
 routes = [
-    Route(method_pattern="GET", path_pattern="/", handler=index),
     Route(method_pattern="GET", path_pattern="/greet/<name>", handler=greet),
     Route(method_pattern=".*", path_pattern=".*", handler=default)
+    Route(method_pattern="GET", path_pattern="/", handler=index),
 ]
 
 from aws_lambda_mess.framework.lambda_dispatcher import get_handler
