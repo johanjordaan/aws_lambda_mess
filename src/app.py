@@ -16,9 +16,10 @@ def default(params, body):
     return bad_request()
 
 
+# Place longer patters higher up in the list
 routes = [
-    Route(method_pattern="GET", path_pattern="/", handler=index),
     Route(method_pattern="GET", path_pattern="/greet/<name>", handler=greet),
+    Route(method_pattern="GET", path_pattern="/", handler=index),
     Route(method_pattern=".*", path_pattern=".*", handler=default)
 ]
 
