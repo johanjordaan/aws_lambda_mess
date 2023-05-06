@@ -7,7 +7,7 @@ def replace_with_regex(pattern):
     match = re.findall("<([a-zA-Z0-9_]*)>", pattern)
     for key in match:
         pattern = pattern.replace(f"<{key}>", f"(?P<{key}>[a-zA-Z0-9\\-_]*)")
-    return pattern + ("?" if pattern.endswith("/") else "/?")
+    return "(/.*?)?" + pattern + ("?" if pattern.endswith("/") else "/?")
 
 
 class Route:

@@ -142,7 +142,7 @@ Now test the package with some of these json test cases:
   "resource": "/{proxy+}",
   "path": "/",
   "httpMethod": "GET",
-  "isBase64Encoded": true,
+  "isBase64Encoded": true
 }
 ```
 Returns 

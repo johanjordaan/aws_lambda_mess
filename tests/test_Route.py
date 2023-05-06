@@ -1,28 +1,28 @@
 from unittest import TestCase
 
-from framework.Route import Route, replace_with_regex
+from aws_lambda_mess.framework.Route import Route, replace_with_regex
 
 
 class TestRoute(TestCase):
     def test_replace_with_regex(self):
         self.assertEqual(
-            replace_with_regex("/users/<name>"),
-            "/users/(?P<name>[a-zA-Z0-9\-_]*)/?"
+            "(/.*?)?/users/(?P<name>[a-zA-Z0-9\-_]*)/?",
+            replace_with_regex("/users/<name>")
         )
 
         self.assertEqual(
-            replace_with_regex("/users/<name>_<surname>"),
-            "/users/(?P<name>[a-zA-Z0-9\-_]*)_(?P<surname>[a-zA-Z0-9\-_]*)/?"
+            "(/.*?)?/users/(?P<name>[a-zA-Z0-9\-_]*)_(?P<surname>[a-zA-Z0-9\-_]*)/?",
+            replace_with_regex("/users/<name>_<surname>")
         )
 
         self.assertEqual(
-            replace_with_regex("/users/<name>/xxx"),
-            "/users/(?P<name>[a-zA-Z0-9\-_]*)/xxx/?"
+            "(/.*?)?/users/(?P<name>[a-zA-Z0-9\-_]*)/xxx/?",
+            replace_with_regex("/users/<name>/xxx")
         )
 
         self.assertEqual(
-            replace_with_regex("/users/<name>/xxx/<surname>"),
-            "/users/(?P<name>[a-zA-Z0-9\-_]*)/xxx/(?P<surname>[a-zA-Z0-9\-_]*)/?"
+            "(/.*?)?/users/(?P<name>[a-zA-Z0-9\-_]*)/xxx/(?P<surname>[a-zA-Z0-9\-_]*)/?",
+            replace_with_regex("/users/<name>/xxx/<surname>")
         )
 
     def test_init(self):
@@ -39,20 +39,21 @@ class TestRoute(TestCase):
     def test_match(self):
         route = Route("GET", "/user/<name>", lambda params, body: None)
         self.assertEqual(
-            route.match("GET", "/user/johan"),
-            (True, {"name": "johan"})
+            (True, {"name": "johan"}),
+            route.match("GET", "/api/user/johan")
+
         )
         self.assertEqual(
-            route.match("GET", "/user/johan/"),
-            (True, {"name": "johan"})
+            (True, {"name": "johan"}),
+            route.match("GET", "/user/johan/")
         )
         self.assertEqual(
-            route.match("GET", "/user/johan/xxxx"),
-            (False, None)
+            (False, None),
+            route.match("GET", "/user/johan/xxxx")
         )
         self.assertEqual(
-            route.match("POST", "/user/johan"),
-            (False, None)
+            (False, None),
+            route.match("POST", "/user/johan")
         )
 
         route = Route("PUT", "/user/<name>/stuff/<xxx_zzz>", lambda params, body: None)
