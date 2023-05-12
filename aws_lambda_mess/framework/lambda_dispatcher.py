@@ -1,6 +1,6 @@
 import json
 
-from aws_lambda_mess.framework.failures import bad_request
+from aws_lambda_mess.framework.failures import not_found, internal_server_error
 
 
 def get_handler(routes):
@@ -12,7 +12,10 @@ def get_handler(routes):
         for route in routes:
             match, params = route.match(method, path)
             if match:
-                return route.run(params, body)
+                try:
+                    return route.run(params, body)
+                except:
+                    return internal_server_error()
 
-        return bad_request()
+        return not_found()
     return lambda_handler

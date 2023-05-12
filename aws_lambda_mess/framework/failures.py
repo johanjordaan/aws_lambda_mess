@@ -4,6 +4,8 @@ def error(code):
         "statusCode": code,
     }
 
+def internal_server_error():
+    return error(404)
 
 def not_found():
     return error(404)

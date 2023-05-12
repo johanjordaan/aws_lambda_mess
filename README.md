@@ -47,7 +47,7 @@ alm --help
 ```
 
 # Create and run a new project
-Create a new project using th cli:
+Create a new project using the cli:
 ```shell
 alm new demo
 ```
